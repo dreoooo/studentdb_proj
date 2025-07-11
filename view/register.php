@@ -30,6 +30,11 @@
             }
         }
 
+        function togglePassword(fieldId){
+            const input = document.getElementById(fieldId);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
     </script>
 
 </head>
@@ -65,11 +70,15 @@
 
         <label for="password">Enter password: </label>
         <input type="password" name="password" id="password"
-        value="<?php echo htmlspecialchars($password ?? '') ?>"><br>
+        value="<?php echo htmlspecialchars($password ?? '') ?>">
+        <button type="button" onclick="togglePassword('password')">👁️</button>
+        <br>
 
         <label for="confirm_password">Confirm password: </label>
         <input type="password" name="confirm_password" id="confirm_password"
-        value="<?php echo htmlspecialchars($confirm_password ?? '') ?>"><br>
+        value="<?php echo htmlspecialchars($confirm_password ?? '') ?>">
+        <button type="button" onclick="togglePassword('confirm_password')">👁️</button>
+        <br>
 
         <button type="submit">Register</button>
 

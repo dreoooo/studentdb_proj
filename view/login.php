@@ -23,6 +23,12 @@
 
             return true;
         }
+
+        function togglePassword(fieldId){
+            const input = document.getElementById(fieldId);
+            input.type = input.type === "password" ? "text" : "password";
+        }
+
     </script>
 </head>
 <body>
@@ -38,7 +44,9 @@
 
         <label for="password">Password: </label>
         <input type="password" name="password" id="password"
-        value="<?php echo htmlspecialchars($password ?? '') ?>"><br>
+        value="<?php echo htmlspecialchars($password ?? '') ?>">
+        <button type="button" onclick="togglePassword('password')">👁️</button>
+        <br>
 
         <button type="submit">Login</button>
     </form>
