@@ -1,35 +1,43 @@
 <?php
+    declare(strict_types= 1);
+
+    require_once("../includes/configure.php");
     $errorMessage = "";
     $username = "";
     $password = "";
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $username = trim($_POST["username"] ?? '');
-        $password = trim($_POST['password'] ??'');
+        $password = trim($_POST["password"] ?? '');
 
-        try {
-            require_once('../includes/database.php');
+        if ($username === "" || $password === "") {
+            $errorMessage = "Fill all fields!";
+        }
 
-            $query = "SELECT * FROM users WHERE username = :username";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (empty($errorMessage)) {
+            require_once("../includes/database.php");
 
-            if($row){
-                if(!password_verify($password, $row["password"])){
-                    $errorMessage = "Invalid password, try again.";
-                }else{
-                    session_start();
-                    $_SESSION["username"] = $row["username"];
-                    header("Location: home.php");
-                    exit();
+            try {
+                $query = "SELECT * FROM users WHERE username = :username";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+                $stmt->execute();
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($user) {
+                    if (!password_verify($password, $user["password"])) {
+                        $errorMessage = "Invalid password or username.";
+                    } else {
+                        $_SESSION["username"] = $user["username"];
+                        header("Location: ../view/home.php");
+                        exit();
+                    }
+                } else {
+                    $errorMessage = "Invalid password or username.";
                 }
-            }else{
-                $errorMessage = "Invalid username or password!";
+            } catch (PDOException $e) {
+                die("Query Failed: " . $e->getMessage());
             }
-        } catch (PDOException $e) {
-            $errorMessage = "Database error: " . $e->getMessage();
         }
     }
 ?>
