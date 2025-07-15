@@ -1,12 +1,12 @@
 <?php
-    require_once("../controller/login_contrl.php");
+require_once("../includes/login.inc.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Login</title>
 
     <script>
         function togglePassword(fieldId){
@@ -16,25 +16,26 @@
     </script>
 </head>
 <body>
-    <h2>Login Form</h2>
-
-    <?php if (!empty($errorMessage)) : ?>
-        <p style="color: red;"><?php echo htmlspecialchars($errorMessage); ?></p>
-    <?php endif; ?>
+    <h2>Login</h2>
 
     <form action="login.php" method="post">
-        <label for="username">Username: </label>
-        <input type="text" name="username" id="username"
+        <input type="text" name="username" id="username" placeholder="Username"
         value="<?php echo htmlspecialchars($username ?? '') ?>"><br>
 
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password"
-        value="<?php echo htmlspecialchars($password ?? '') ?>">
-        <button type="button" onclick="togglePassword('password')">👁️</button><br>
+        <input type="password" name="password" id="password" placeholder="Password">
+        <button type="button" onclick="return togglePassword('password')">view</button><br>
 
-        <button type="submit">Login</button>
+        <button type="submit">Sign In</button>
     </form>
 
-    <p>Don't have an account? <a href="register.php">Sign up here</a></p>
+    <?php if(!empty($error)): ?>
+        <div style="color:red">
+            <?php foreach($error as $err): ?>
+                <p><?php echo htmlspecialchars($err); ?></p>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
+
+    <p>Don't have an account? <a href="register.php">Sign Up Here</a></p>
 </body>
 </html>
