@@ -1,57 +1,58 @@
-<?php 
-    declare(strict_types= 1);
+<?php
+declare(strict_types=1);
 
-    function input_empty(string $name, string $email, string $password, string $confirm_password, string $gender, string $status){
-        if(empty($name) || empty($email) || empty($password) || empty($confirm_password) || empty($gender) || empty($status)){
-            return true;
-        }else{
-            return false;
+class RegisterController {
+    private UserModel $userModel;
+    public string $msg = "";
+
+    public function __construct(UserModel $userModel) {
+        $this->userModel = $userModel;
+    }
+
+    public function handle(array $post): void {
+        $username = trim($post['username'] ?? '');
+        $email = trim($post['email'] ?? '');
+        $password = trim($post['password'] ?? '');
+        $confirmPassword = trim($post['confirm_password'] ?? '');
+
+        if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
+            $this->msg = "❌ Please fill in all fields!";
+            return;
         }
-    }
 
-    function invalid_email(string $email){
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            return true;
-        }else{
-            return false;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->msg = "❌ Invalid email format!";
+            return;
         }
-    }
 
-    function invalid_password(string $password){
-        if(strlen($password) < 8 ||
-        !preg_match('/[A-Z]/', $password) || 
-        !preg_match('/[a-z]/', $password) || 
-        !preg_match('/[0-9]/', $password)){
-            return true;
-        }else{
-            return false;
+        if (!$this->isValidPassword($password)) {
+            $this->msg = "❌ Password must have at least 8 characters, including uppercase, lowercase, and a number.";
+            return;
         }
-    }
 
-    function pass_not_match(string $password, string $confirm_password){
-        if($password !== $confirm_password){
-            return true;
-        }else{
-            return false;
+        if ($password !== $confirmPassword) {
+            $this->msg = "❌ Passwords do not match!";
+            return;
         }
-    }
 
-    function username_taken(object $pdo, string $username){
-        if(get_username( $pdo,  $username)){
-            return true;
-        }else{
-            return false;
+        if ($this->userModel->getUserByUsername($username)) {
+            $this->msg = "❌ Username is already taken!";
+            return;
         }
-    }
 
-    function email_taken(object $pdo, string $email){
-        if(get_email( $pdo,  $email)){
-            return true;
-        }else{
-            return false;
+        if ($this->userModel->getUserByEmail($email)) {
+            $this->msg = "❌ Email is already registered!";
+            return;
         }
+
+        $this->userModel->createUser($username, $email, $password);
+        $this->msg = "✅ Registration successful!";
     }
 
-    function create_user(object $pdo, string $username, string $password, string $email, string $gender, string $status){
-        return set_user( $pdo,  $username,  $password,  $email,  $gender,  $status);
+    private function isValidPassword(string $password): bool {
+        return strlen($password) >= 8 &&
+            preg_match('/[A-Z]/', $password) &&
+            preg_match('/[a-z]/', $password) &&
+            preg_match('/[0-9]/', $password);
     }
+}

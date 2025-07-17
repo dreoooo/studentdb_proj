@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error[] = 'Fill all fields!';
     } elseif (user_not_found($pdo, $username)) {
         $error[] = 'User not found!';
+        $username = $password = "";
     } elseif (wrong_password($pdo, $username, $password)) {
         $error[] = 'Invalid password!';
     } else {
