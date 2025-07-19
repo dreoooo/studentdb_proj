@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         if (invalid_email($email)) {
             $error["invalid_email"] = "Invalid email!";
+            $username = "";
         }
         if (invalid_password($password)) {
             $error["invalid_pass"] = "Invalid password!";
@@ -29,20 +30,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         if (user_taken($pdo, $username)) {
             $error["user_taken"] = "Username is already taken!";
+            $username = "";
         }
         if (email_taken($pdo, $email)) {
             $error["email_taken"] = "Email is already taken!";
+            $email = "";
         }
     }
 
     if (!empty($error)) {
         setError($error);
+
+        $_SESSION["signup_data"] = [
+            "username" => $username,
+            "email"=> $email
+        ];
+
         header("Location: signup_form.php");
         exit();
     }
 
     create_user($pdo, $username, $email, $password);
     setSuccess("User Registered Successfully!");
+    $_SESSION["signup_data"] = [];
     header("Location: signup_form.php");
     exit();
 }

@@ -20,10 +20,10 @@ require_once("view/signup_view.php");
 
     <form action="signup_form.php" method="post">
         <input type="text" name="username" id="username" placeholder="Username"
-            value="<?php echo htmlspecialchars($username ?? '') ?>"><br>
+            value="<?php echo htmlspecialchars($_SESSION["signup_data"]["username"] ?? '') ?>"><br>
 
         <input type="text" name="email" id="email" placeholder="Email"
-            value="<?php echo htmlspecialchars($email ?? '') ?>"><br>
+            value="<?php echo htmlspecialchars($_SESSION["signup_data"]["email"] ?? '') ?>"><br>
 
         <input type="password" name="password" id="password" placeholder="Password">
         <input type="checkbox" onclick="return togglePassword('password')"><br>
@@ -36,5 +36,6 @@ require_once("view/signup_view.php");
 
     <?php displayError(); ?>
     <?php displaySuccess(); ?>
+    <?php unset($_SESSION["signup_data"]); ?>
 </body>
 </html>
