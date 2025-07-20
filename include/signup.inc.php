@@ -3,10 +3,10 @@ declare(strict_types=1);
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = trim($_POST["username" ?? '']);
-    $email = trim($_POST["email" ?? '']);
-    $password = trim($_POST["password" ?? '']);
-    $confirm_pass = trim($_POST["confirm_pass" ?? '']);
+    $username = trim($_POST["username"] ?? '');
+    $email = strtolower($_POST["email"] ?? '');
+    $password = trim($_POST["password"] ?? '');
+    $confirm_pass = trim($_POST["confirm_pass"] ?? '');
 
     require_once(__DIR__ . "/db.php");
     require_once(__DIR__ . "/../controller/signup_contrl.php");
@@ -53,6 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     create_user($pdo, $username, $email, $password);
     setSuccess("User Registered Successfully!");
     $_SESSION["signup_data"] = [];
-    header("Location: signup_form.php");
+    header("Location: login_form.php");
     exit();
 }

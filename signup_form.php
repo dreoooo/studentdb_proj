@@ -35,7 +35,6 @@ require_once("view/signup_view.php");
     </form>
 
     <?php displayError(); ?>
-    <?php displaySuccess(); ?>
     <?php unset($_SESSION["signup_data"]); ?>
 </body>
 </html>
