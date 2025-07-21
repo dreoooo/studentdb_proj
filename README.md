@@ -6,26 +6,38 @@ This is a simple PHP-based login and registration system with session management
 
 ## 📌 Features
 
-- ✅ **User Registration** with:
-  - Username, email, password, gender, status fields
-  - Password confirmation
-  - Duplicate username/email check
-- ✅ **Secure Login** using sessions
-- ✅ **Logout** functionality with session destroy
-- ✅ **Client-side Validation** (JavaScript)
-- ✅ **Organized MVC-like Folder Structure**
-- ✅ **Clean and Responsive UI** (optional Bootstrap)
+### ✅ User Registration
+- Username, email, and password fields  
+- Password confirmation  
+- Duplicate username/email check  
+
+### ✅ Secure Login
+- Session-based authentication  
+- Password hashing using `password_hash()`  
+
+### ✅ Logout
+- Session termination with redirect  
+
+### ✅ Client-side Validation
+- Show/hide password toggle (JavaScript)  
+- HTML5 field validation  
+
+### ✅ Organized Project Structure
+- MVC-like folder organization (Model, View, Controller)
+
+### ✅ Clean & Responsive UI
+- (Optional) Bootstrap integration
 
 ---
 
 ## 🚀 Technologies Used
 
-- **PHP** – Server-side scripting for backend logic and session handling  
-- **MySQL** – Database for storing user credentials  
-- **HTML5** – Markup language for building the user interface  
-- **CSS3** – (Optional) For styling the forms and layout  
-- **JavaScript** – For client-side validation and interactive features (e.g., show/hide password)  
-- **PDO (PHP Data Objects)** – Secure method for database interaction  
-- **XAMPP** – Local development environment (Apache, MySQL, PHP)  
-- **MVC Architecture** – Organized structure using Model-View-Controller separation  
-- **Git** – Version control for managing source code
+- **PHP** – Server-side scripting  
+- **MySQL** – Database management system  
+- **HTML5** – Markup language  
+- **CSS3** – (Optional) Styling and layout  
+- **JavaScript** – Frontend interactions  
+- **PDO (PHP Data Objects)** – Secure database access  
+- **XAMPP** – Local development environment  
+- **Git** – Version control  
+- **MVC Architecture** – Logical code organization
