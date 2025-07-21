@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = strtolower($_POST["email"] ?? '');
     $password = trim($_POST["password"] ?? '');
     $confirm_pass = trim($_POST["confirm_pass"] ?? '');
+    $terms = isset($_POST["terms"]) ? 1 : 0;
 
     require_once(__DIR__ . "/db.php");
     require_once(__DIR__ . "/../controller/signup_contrl.php");
@@ -21,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (invalid_email($email)) {
             $error["invalid_email"] = "Invalid email!";
             $username = "";
+
         }
         if (invalid_password($password)) {
             $error["invalid_pass"] = "Invalid password!";
@@ -36,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $error["email_taken"] = "Email is already taken!";
             $email = "";
         }
+
+        if(terms_not_checked( $terms)){
+            $error["terms_not_checked"] = "You must agree to the Terms & Conditions!";
+        }
     }
 
     if (!empty($error)) {
@@ -50,9 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    create_user($pdo, $username, $email, $password);
+    create_user($pdo, $username, $email, $password, $terms);
     setSuccess("User Registered Successfully!");
-    $_SESSION["signup_data"] = [];
+    unset($_SESSION["signup_data"]);
     header("Location: login_form.php");
     exit();
 }
+

@@ -31,7 +31,13 @@ require_once("view/signup_view.php");
         <input type="password" name="confirm_pass" id="confirm_pass" placeholder="Confirm Password">
         <input type="checkbox" onclick="return togglePassword('confirm_pass')"><br><br>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">Sign Up</button><br><br>
+
+        <label for="terms">
+            <input type="checkbox" name="terms" id="terms"> I agree to the Terms & Conditions
+        </label>
+        
+        <p>Already have an account? <a href="login_form.php">Login</a></p>
     </form>
 
     <?php displayError(); ?>

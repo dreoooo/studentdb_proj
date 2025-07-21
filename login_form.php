@@ -21,9 +21,9 @@ require_once("view/signup_view.php");
         <input type="password" name="password" id="password" placeholder="Password"><br>
 
         <button type="submit">Login</button>
-    </form>
 
-    <?php displaySuccess(); ?>
+        <p>Don't have an account? <a href="signup_form.php">Register</a></p>
+    </form>
 
 </body>
 </html>

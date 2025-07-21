@@ -28,8 +28,12 @@ function email_taken(object $pdo, string $email): bool {
     return get_email($pdo, $email) !== false;
 }
 
-function create_user(object $pdo, string $username, string $email, string $password): void {
-    set_user($pdo, $username, $email, $password);
+function terms_not_checked(int $terms): bool {
+    return $terms !== 1;
+}
+
+function create_user(object $pdo, string $username, string $email, string $password, int $terms): void {
+    set_user($pdo, $username, $email, $password, $terms);
 }
 
 function setError(array $errorArray): void {
