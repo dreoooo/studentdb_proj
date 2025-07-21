@@ -19,6 +19,7 @@ require_once("view/signup_view.php");
     <h2>Register</h2>
 
     <form action="signup_form.php" method="post">
+
         <input type="text" name="username" id="username" placeholder="Username"
             value="<?php echo htmlspecialchars($_SESSION["signup_data"]["username"] ?? '') ?>"><br>
 
@@ -36,7 +37,11 @@ require_once("view/signup_view.php");
         <label for="terms">
             <input type="checkbox" name="terms" id="terms"> I agree to the Terms & Conditions
         </label>
-        
+
+        <p style="font-size: 0.9em; color: gray;">
+            * After registering, please check your email to verify your account.
+        </p>
+
         <p>Already have an account? <a href="login_form.php">Login</a></p>
     </form>
 

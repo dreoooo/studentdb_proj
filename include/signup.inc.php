@@ -16,13 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $error = [];
 
-    if (input_empty($username, $email, $password, $confirm_pass)) {
+    if (input_empty($username, $email, $password, $confirm_pass, $terms)) {
         $error["input_empty"] = "Fill all fields!";
     } else {
         if (invalid_email($email)) {
             $error["invalid_email"] = "Invalid email!";
             $username = "";
-
         }
         if (invalid_password($password)) {
             $error["invalid_pass"] = "Invalid password!";
@@ -38,28 +37,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $error["email_taken"] = "Email is already taken!";
             $email = "";
         }
-
-        if(terms_not_checked( $terms)){
+        if (terms_not_checked($terms)) {
             $error["terms_not_checked"] = "You must agree to the Terms & Conditions!";
         }
     }
 
     if (!empty($error)) {
         setError($error);
-
         $_SESSION["signup_data"] = [
             "username" => $username,
-            "email"=> $email
+            "email" => $email
         ];
-
         header("Location: signup_form.php");
         exit();
     }
 
     create_user($pdo, $username, $email, $password, $terms);
-    setSuccess("User Registered Successfully!");
+    setSuccess("User registered! Please check your email to verify your account.");
     unset($_SESSION["signup_data"]);
     header("Location: login_form.php");
     exit();
 }
-

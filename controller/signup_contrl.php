@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-function input_empty(string $username, string $email, string $password, string $confirm_pass): bool {
-    return empty($username) || empty($email) || empty($password) || empty($confirm_pass);
+function input_empty(string $username, string $email, string $password, string $confirm_pass, int $terms): bool {
+    return empty($username) || empty($email) || empty($password) || empty($confirm_pass) || empty($terms);
 }
 
 function invalid_email(string $email): bool {
