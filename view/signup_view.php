@@ -10,9 +10,10 @@ function displayError(): void {
     }
 }
 
-function displaySuccess(): void {
+function displaySuccess() {
     if (isset($_SESSION["success"])) {
-        echo "<p style='color:green'>" . htmlspecialchars($_SESSION["success"]) . "</p>";
+        echo "<p style='color:green;'>" . htmlspecialchars($_SESSION["success"]) . "</p>";
         unset($_SESSION["success"]);
     }
 }
+

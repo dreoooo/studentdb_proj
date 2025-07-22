@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     create_user($pdo, $username, $email, $password, $terms);
     setSuccess("User registered! Please check your email to verify your account.");
     unset($_SESSION["signup_data"]);
-    header("Location: login_form.php");
+    header("Location: signup_form.php");
     exit();
 }
+
