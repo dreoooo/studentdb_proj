@@ -14,5 +14,9 @@ if(!isset($_SESSION["username"])){
 </head>
 <body>
     <h2>Welcome User, <?php echo strtoupper(htmlspecialchars($_SESSION["username"])); ?>!</h2>
+
+    <form action="include/logout.php" method="post">
+        <button type="submit">Logout</button>
+    </form>
 </body>
 </html>
