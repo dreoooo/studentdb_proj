@@ -16,7 +16,7 @@ function get_email(object $pdo, string $email) {
 
 function set_user(object $pdo, string $username, string $email, string $password, int $terms): void {
     $token = bin2hex(random_bytes(32));
-    $hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+    $hash = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
 
     $stmt = $pdo->prepare("INSERT INTO users(username, email, password, terms_accepted, token, is_verified) 
                         VALUES(:username, :email, :password, :terms, :token, 0)");

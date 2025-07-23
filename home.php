@@ -13,10 +13,6 @@ if(!isset($_SESSION["username"])){
     <title>Document</title>
 </head>
 <body>
-    <h2>Welcome User, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</h2>
-
-    <form action="include/logout.php" method="post">
-        <button type="submit">Logout</button>
-    </form>
+    <h2>Welcome User, <?php echo strtoupper(htmlspecialchars($_SESSION["username"])); ?>!</h2>
 </body>
 </html>
