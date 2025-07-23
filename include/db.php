@@ -1,7 +1,7 @@
 <?php
 
     $host = "localhost";
-    $dbname = "studentdb";
+    $dbname = "simple_login_system";
     $dbuser = "root";
     $pass = "";
 

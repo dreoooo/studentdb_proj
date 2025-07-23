@@ -12,19 +12,22 @@ function invalid_username(object $pdo, string $username): bool {
 function invalid_pass(object $pdo, string $username, string $password) {
     $user = get_user($pdo, $username);
 
-    if (!$user) {
-        echo "User not found.";
-        exit();
-    }
+    if (!$user) return true;
 
-    if (!password_verify($password, $user["password"])) {
-        echo "Password mismatch. Entered: $password, DB: " . $user["password"];
-        exit();
-    }
-
-    return false;
+    return $user && !password_verify($password, $user["password"]);
 }
 
+function user_not_found(object $pdo, string $username, string $password): bool {
+    $user = get_user($pdo, $username);
+
+    // User doesn't exist
+    if ($user === null) {
+        return true;
+    }
+
+    // User exists but password is wrong
+    return !password_verify($password, $user["password"]);
+}
 
 function loggedIn(object $pdo, string $username, string $password) {
     $user = get_user( $pdo,  $username);

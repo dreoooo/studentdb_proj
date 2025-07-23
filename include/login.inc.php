@@ -13,29 +13,27 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     //ERROR HANDLERS
     $error = [];
     
-    if(input_empty( $username,  $password)){
+    if (input_empty($username, $password)) {
         $error["input_empty"] = "Fill all fields!";
-    }else{
+    } else {
+        $user = get_user($pdo, $username);
 
-        if(invalid_username( $pdo,  $username)){
-            $error["invalid_username"] = "Invalid username!";
-            $username = "";
-        }
-
-        if(invalid_pass( $pdo,  $username, $password)){
-            $error["invalid_pass"] = "Invalid password!";
+        if (!$user) {
+            $error["invalid_username"] = "Username not found!";
+        } elseif (!password_verify($password, $user["password"])) {
+            $error["invalid_pass"] = "Incorrect password!";
         }
     }
 
     if (loggedIn($pdo, $username, $password)) {
-    $_SESSION["username"] = $username;
-    header("Location: home.php");
-    exit();
+        $_SESSION["username"] = $username;
+        header("Location: home.php");
+        exit();
     } 
     else {
-    setError(["login_failed" => "Incorrect username or password"]);
-    header("Location: login_form.php");
-    exit();
-}
+        setError(["login_failed" => "Incorrect username or password"]);
+        header("Location: login_form.php");
+        exit();
+    }
 
 }
