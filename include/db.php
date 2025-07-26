@@ -1,7 +1,7 @@
 <?php
 
     $host = "localhost";
-    $dbname = "simple_login_system";
+    $dbname = "myfirstdb";
     $dbuser = "root";
     $pass = "";
 
